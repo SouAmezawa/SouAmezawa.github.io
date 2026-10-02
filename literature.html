@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiveNioo Studios - 文学创作</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 (与主页一致) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-accent {
+            background: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+            background: #d1146a;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            cursor: pointer;
+        }
+
+        /* 文学页面专属英雄区 */
+        .hero-literature {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, #fef5e7 0%, #f0f2ff 100%);
+            text-align: center;
+        }
+
+        .hero-literature h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .hero-literature h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero-literature p {
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 作品卡片网格 (三本书) */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .work-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .work-content {
+            padding: 30px;
+        }
+
+        .work-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .work-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .work-card p {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .work-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .work-link i {
+            transition: transform 0.2s;
+        }
+
+        .work-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 双列内容区域 */
+        .two-columns {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .two-columns > div {
+            flex: 1;
+        }
+
+        .two-columns h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .two-columns p {
+            margin-bottom: 20px;
+            color: var(--gray-color);
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 70px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .hero-literature h1 { font-size: 2.5rem; }
+            .section-title h2 { font-size: 2rem; }
+            .two-columns { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            .nav-links li { margin: 15px 0; }
+            .mobile-menu-btn { display: block; }
+            .hero-literature { padding: 150px 0 70px; }
+            .section { padding: 60px 0; }
+        }
+
+        @media (max-width: 576px) {
+            .hero-literature h1 { font-size: 2rem; }
+            .btn { width: auto; max-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-cube"></i>
+                    <span>SiveNioo Studios</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#home">首页</a></li>
+                    <li><a href="index.html#features">功能</a></li>
+                    <li><a href="index.html#about">关于</a></li>
+                    <li><a href="index.html#services">服务</a></li>
+                    <li><a href="index.html#contact">联系</a></li>
+                    <li><a href="index.html#contact" class="btn">立即开始</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-literature">
+        <div class="container">
+            <h1><span>文学</span> · 原创作品</h1>
+            <p>三部已出版作品，在线试读</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>已出版作品</h2>
+                <p>SiveNioo Studios 旗下文学作品，点击封面或链接即可阅读</p>
+            </div>
+            <div class="works-grid">
+                <!-- 书籍1：《周期》 -->
+                <div class="work-card">
+                    <div class="work-content">
+                        <div class="work-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>《周期》</h3>
+                        <p>序青春二八载，以白话十万言。</p>
+                        <a href="https://www.bilibili.com/read/readlist/rl864700" class="work-link" target="_blank">阅读《周期》 <i class="fas fa-arrow-right"></i></a>
+                        <!-- 请将上面的 href="#" 替换为实际的作品链接地址 -->
+                    </div>
+                </div>
+                <!-- 书籍2：《永夜之国》 -->
+                <div class="work-card">
+                    <div class="work-content">
+                        <div class="work-icon"><i class="fas fa-moon"></i></div>
+                        <h3>《永夜之国》</h3>
+                        <p>说故事敷陈天意，借永夜引括人生。</p>
+                        <a href="https://www.bilibili.com/read/readlist/rl1031191" class="work-link" target="_blank">阅读《永夜之国》 <i class="fas fa-arrow-right"></i></a>
+                        <!-- 请将上面的 href="#" 替换为实际的作品链接地址 -->
+                    </div>
+                </div>
+                <!-- 书籍3：《人生代代，江月年年》 -->
+                <div class="work-card">
+                    <div class="work-content">
+                        <div class="work-icon"><i class="fas fa-water"></i></div>
+                        <h3>《人生代代，江月年年》</h3>
+                        <p>献给我的童年。</p>
+                        <a href="https://www.qidian.com/book/1048700848/" class="work-link" target="_blank">阅读本书 <i class="fas fa-arrow-right"></i></a>
+                        <!-- 请将上面的 href="#" 替换为实际的作品链接地址 -->
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 40px; color: var(--gray-color);">※ 点击书名链接即可在线阅读（当前为示例占位符，请替换为真实URL）</p>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="two-columns">
+                <div>
+                    <h3>文学 · 跨媒介整活</h3>
+                    <p>《周期》《永夜之国》《人生代代，江月年年》融合了多种学科知识，在阅读中学习。</p>
+                    <p>我们长期接受投稿与文学项目合作，欢迎热爱写作的你与我们相遇。</p>
+                    <a href="index.html#contact" class="btn" style="margin-top: 15px;">提交作品构想</a>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-book-open" style="font-size: 7rem; color: var(--primary-color); opacity: 0.6;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SiveNioo Studios</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#home">首页</a></li>
+                        <li><a href="index.html#features">功能</a></li>
+                        <li><a href="index.html#about">关于我们</a></li>
+                        <li><a href="index.html#services">服务</a></li>
+                        <li><a href="idcard.html">站主介绍</a></li>
+                        <li><a href="index.html#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>服务项目</h3>
+                    <ul class="footer-links">
+                        <li><a href="literature.html">文学</a></li>
+                        <li><a href="#">计算机</a></li>
+                        <li><a href="#">艺术</a></li>
+                        <li><a href="#">地理</a></li>
+                        <li><a href="#">游戏</a></li>
+                        <li><a href="#">数理化</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 大连市甘井子区</li>
+                        <li><i class="fas fa-phone"></i> +86 130 1942 8653</li>
+                        <li><i class="fas fa-envelope"></i> erjiuwuqi@outlook.com</li>
+                        <li><i class="fas fa-clock"></i> 周日: 7:30-14:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 SiveNioo Studios. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '10px 0';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.05)';
+            }
+        });
+    </script>
+</body>
+</html>
